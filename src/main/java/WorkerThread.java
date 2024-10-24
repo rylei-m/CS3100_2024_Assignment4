@@ -24,7 +24,20 @@ public class WorkerThread extends Thread {
     }
 
     private int computePiDigit(int n) {
-        // Implement BBP formula to compute the nth digit of Pi
-        return 0; // Placeholder
+        double pi = 0.0;
+
+        for (int k = 0; k <= n; k++) {
+            pi += (1.0 / Math.pow(16, k)) *
+                    ((4.0 / (8 * k + 1)) -
+                            (2.0 / (8 * k + 4)) -
+                            (1.0 / (8 * k + 5)) -
+                            (1.0 / (8 * k + 6)));
+        }
+
+        int nthDigit = (int) ((pi * Math.pow(10, n)) % 10);
+
+        return Math.abs(nthDigit);
     }
+
 }
+
