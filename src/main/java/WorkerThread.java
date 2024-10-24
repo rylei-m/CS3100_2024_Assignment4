@@ -1,3 +1,5 @@
+package src.main.java;
+
 public class WorkerThread extends Thread {
     private TaskQueue taskQueue;
     private ResultTable resultTable;

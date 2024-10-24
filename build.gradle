@@ -4,13 +4,13 @@ plugins {
 }
 
 application {
-    mainClassName = 'ParallelPi'
+    mainClassName = 'src.main.java.ParallelPi'
 }
 
 jar {
     manifest {
         attributes(
-                'Main-Class': 'ParallelPi'
+                'Main-Class': 'src.main.java.ParallelPi'
         )
     }
 }
