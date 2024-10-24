@@ -1,4 +1,6 @@
 package src.main.java;
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 public class WorkerThread extends Thread {
     private TaskQueue taskQueue;
@@ -24,19 +26,27 @@ public class WorkerThread extends Thread {
     }
 
     private int computePiDigit(int n) {
-        double pi = 0.0;
+        BigDecimal pi = BigDecimal.ZERO;
+        MathContext mc = new MathContext(100);  // Higher precision for Pi computation
 
         for (int k = 0; k <= n; k++) {
-            pi += (1.0 / Math.pow(16, k)) *
-                    ((4.0 / (8 * k + 1)) -
-                            (2.0 / (8 * k + 4)) -
-                            (1.0 / (8 * k + 5)) -
-                            (1.0 / (8 * k + 6)));
+            // Use BigDecimal to avoid issues with Math.pow
+            BigDecimal sixteenPowK = BigDecimal.valueOf(16).pow(k, mc); // 16^k
+
+            BigDecimal term = BigDecimal.ONE.divide(sixteenPowK, mc)
+                    .multiply(
+                            BigDecimal.valueOf(4).divide(BigDecimal.valueOf(8 * k + 1), mc)
+                                    .subtract(BigDecimal.valueOf(2).divide(BigDecimal.valueOf(8 * k + 4), mc))
+                                    .subtract(BigDecimal.ONE.divide(BigDecimal.valueOf(8 * k + 5), mc))
+                                    .subtract(BigDecimal.ONE.divide(BigDecimal.valueOf(8 * k + 6), mc))
+                    );
+            pi = pi.add(term, mc);
         }
 
-        int nthDigit = (int) ((pi * Math.pow(10, n)) % 10);
+        // Multiply pi by 10^n to get the nth digit
+        BigDecimal shiftedPi = pi.multiply(BigDecimal.TEN.pow(n), mc);
 
-        return Math.abs(nthDigit);
+        return shiftedPi.intValue() % 10;
     }
 
 }

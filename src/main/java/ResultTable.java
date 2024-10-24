@@ -10,8 +10,8 @@ public class ResultTable {
     }
 
     public synchronized void printResults() {
-        for (int i = 0; i < results.size(); i++) {
-            System.out.print(results.get(i));
-        }
+        results.keySet().stream().sorted().forEach(key -> {
+            System.out.print(results.get(key));
+        });
     }
 }

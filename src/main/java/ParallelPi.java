@@ -23,11 +23,11 @@ public class ParallelPi {
         }
 
         long endTime = System.nanoTime();
-        long totalTime = TimeUnit.NANOSECONDS.toSeconds(endTime - startTime);
+        long totalTimeMillis = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
+        System.out.println("Time taken: " + totalTimeMillis + " ms");
 
         System.out.println("\nComputed Pi: ");
         resultTable.printResults();
 
-        System.out.println("\nTime taken: " + totalTime + " seconds");
     }
 }
